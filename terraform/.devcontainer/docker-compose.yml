@@ -1,0 +1,23 @@
+# dev container用のコンテナを作成する
+version: '3'
+services:
+  terraform:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    init: true
+    environment:
+      - TZ=Asia/Tokyo
+      - CHOKIDAR_USEPOLLING=true
+    command: sleep infinity
+    volumes:
+      - type: bind
+        source: '../../.'
+        target: '/current'
+      - type: bind
+        source: '~/.aws'
+        target: '/home/vscode/.aws'
+    ports:
+      - 3000:3000
+    tty: true
+    stdin_open: true
